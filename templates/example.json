@@ -1,0 +1,12 @@
+[
+  {
+    "fileName": "example1.txt",
+    "outputPath": "./output/example1.txt",
+    "prompt": "Write a haiku about programming"
+  },
+  {
+    "fileName": "example2.txt",
+    "outputPath": "./output/example2.txt",
+    "prompt": "Explain quantum computing in simple terms"
+  }
+]
