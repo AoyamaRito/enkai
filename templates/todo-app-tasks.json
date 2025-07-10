@@ -7,7 +7,7 @@
   {
     "fileName": "TodoItem.tsx",
     "outputPath": "./todo-app/components/TodoItem.tsx",
-    "prompt": "ToDo項目を表示するコンポーネント:\n- チェックボックスで完了状態表示\n- 削除ボタン\n- 完了時は打ち消し線\n- ホバー時のアニメーション\n- Tailwind CSSでスタイリング\n- TypeScript型定義完備"
+    "prompt": "ToDo項目を表示するコンポーネント:\n- 完全自己完結（外部コンポーネント禁止）\n- チェックボックスで完了状態表示\n- 削除ボタン\n- 完了時は打ち消し線\n- ホバー時のアニメーション\n- Tailwind CSSでスタイリング\n- TypeScript型定義完備\n- propsで受け取る機能も全てファイル内で定義"
   },
   {
     "fileName": "TodoForm.tsx",

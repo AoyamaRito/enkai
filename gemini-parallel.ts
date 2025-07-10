@@ -76,7 +76,9 @@ async function executeParallel(tasks: Task[], concurrency: number = 5) {
       const taskStartTime = Date.now();
       
       try {
-        const result = await model.generateContent(task.prompt);
+        // AI-First原則を必ず追加
+        const fullPrompt = `${AI_FIRST_BASE_PROMPT}\n\n${task.prompt}`;
+        const result = await model.generateContent(fullPrompt);
         const response = result.response.text();
         
         // コードブロックを抽出

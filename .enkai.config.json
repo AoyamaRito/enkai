@@ -1,0 +1,7 @@
+{
+  "defaultPromptPrefix": "# AI-First開発原則（必須遵守）\n\n1. **完全自己完結原則**\n   - 1ファイル = 1つの完全な機能\n   - 外部インポートは絶対最小限（React/Next.js標準のみ）\n   - export/import禁止（デフォルトexportのみ）\n\n2. **技術スタック**\n   - TypeScript必須\n   - インラインスタイル + Tailwind CSS\n   - useState/useReducer（状態管理）\n\n3. **禁止事項**\n   - カスタムhooks\n   - 外部コンポーネント\n   - utils/lib関数\n   - CSS Modules\n\n以下の仕様で実装:\n",
+  
+  "defaultConcurrency": 5,
+  "defaultModel": "gemini-2.0-flash",
+  "autoAddPrefix": true
+}
