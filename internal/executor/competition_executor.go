@@ -16,6 +16,7 @@ type CompetitionExecutor struct {
 	apiKey      string
 	concurrency int
 	models      []string
+	isPro       bool
 }
 
 // NewCompetitionExecutor は新しいCompetitionExecutorを作成
@@ -24,6 +25,17 @@ func NewCompetitionExecutor(apiKey string, concurrency int, models []string) *Co
 		apiKey:      apiKey,
 		concurrency: concurrency,
 		models:      models,
+		isPro:       false,
+	}
+}
+
+// NewProCompetitionExecutor はProモデル用のCompetitionExecutorを作成
+func NewProCompetitionExecutor(apiKey string, concurrency int) *CompetitionExecutor {
+	return &CompetitionExecutor{
+		apiKey:      apiKey,
+		concurrency: concurrency,
+		models:      []string{"gemini-2.0-pro"},
+		isPro:       true,
 	}
 }
 
@@ -48,7 +60,12 @@ func (e *CompetitionExecutor) ExecuteParallel(tasks []types.Task) []types.Compet
 			defer func() { <-semaphore }()
 			
 			// コンペティション実行
-			competitor := competition.NewCompetitor(e.apiKey, e.models)
+			var competitor *competition.Competitor
+			if e.isPro {
+				competitor = competition.NewProCompetitor(e.apiKey)
+			} else {
+				competitor = competition.NewCompetitor(e.apiKey, e.models)
+			}
 			result := competitor.CompeteTask(t)
 			results[index] = result
 			

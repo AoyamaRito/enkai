@@ -13,6 +13,7 @@ var (
 	apiKey      string
 	noCompete   bool
 	models      []string
+	usePro      bool
 )
 
 var rootCmd = &cobra.Command{
@@ -27,6 +28,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&apiKey, "api-key", "", "Gemini API Key (環境変数 GEMINI_API_KEY でも設定可)")
 	rootCmd.PersistentFlags().BoolVar(&noCompete, "no-compete", false, "コンペティションモードを無効化（デフォルト: false）")
 	rootCmd.PersistentFlags().StringSliceVar(&models, "models", nil, "使用するモデル（デフォルト: 全モデル）")
+	rootCmd.PersistentFlags().BoolVar(&usePro, "pro", false, "Gemini 2.0-Proモデルを使用（3モードで実行）")
 	
 	// サブコマンドを追加
 	rootCmd.AddCommand(cmd.NewFromTemplateCmd())

@@ -66,6 +66,18 @@ func NewClientWithMode(apiKey string, mode GenerationMode) *Client {
 	}
 }
 
+// NewProClientWithMode はProモデルでモード指定のクライアントを作成
+func NewProClientWithMode(apiKey string, mode GenerationMode) *Client {
+	return &Client{
+		apiKey: apiKey,
+		model:  "gemini-2.0-pro",
+		mode:   mode,
+		httpClient: &http.Client{
+			Timeout: timeout,
+		},
+	}
+}
+
 // GenerateContent はプロンプトからコンテンツを生成
 func (c *Client) GenerateContent(prompt string) (string, error) {
 	// AI-First開発原則を含むシステムプロンプト

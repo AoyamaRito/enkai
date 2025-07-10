@@ -49,3 +49,8 @@ func getModels(cmd *cobra.Command) []string {
 	models, _ := cmd.Root().PersistentFlags().GetStringSlice("models")
 	return models
 }
+
+func isProMode(cmd *cobra.Command) bool {
+	pro, _ := cmd.Root().PersistentFlags().GetBool("pro")
+	return pro
+}

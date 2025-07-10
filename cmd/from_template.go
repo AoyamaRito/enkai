@@ -50,7 +50,12 @@ func newFromTemplateCmd() *cobra.Command {
 			// コンペティションモードかどうかで実行方法を切り替え
 			if isCompetitionMode(cmd) {
 				// コンペティションモード（デフォルト）
-				compExec := executor.NewCompetitionExecutor(apiKey, getConcurrency(cmd), getModels(cmd))
+				var compExec *executor.CompetitionExecutor
+				if isProMode(cmd) {
+					compExec = executor.NewProCompetitionExecutor(apiKey, getConcurrency(cmd))
+				} else {
+					compExec = executor.NewCompetitionExecutor(apiKey, getConcurrency(cmd), getModels(cmd))
+				}
 				compResults := compExec.ExecuteParallel(tasks)
 				
 				// サマリー表示

@@ -14,6 +14,7 @@ import (
 type Competitor struct {
 	apiKey string
 	models []string
+	isPro  bool
 }
 
 // NewCompetitor は新しいCompetitorを作成
@@ -25,21 +26,42 @@ func NewCompetitor(apiKey string, models []string) *Competitor {
 	return &Competitor{
 		apiKey: apiKey,
 		models: models,
+		isPro:  false,
+	}
+}
+
+// NewProCompetitor はProモデル用のCompetitorを作成
+func NewProCompetitor(apiKey string) *Competitor {
+	return &Competitor{
+		apiKey: apiKey,
+		models: []string{"gemini-2.0-pro"},
+		isPro:  true,
 	}
 }
 
 // CompeteTask は複数モデルでタスクを実行し最良の結果を選択
 func (c *Competitor) CompeteTask(task types.Task) types.CompetitionResult {
-	// Gemini 2.0 Flashを異なるモードで実行
+	// モードの設定
 	modes := []gemini.GenerationMode{
 		gemini.ModeNormal,
 		gemini.ModeStrict,
 		gemini.ModeCreative,
 	}
-	modeNames := []string{
-		"gemini-2.0-flash (通常モード)",
-		"gemini-2.0-flash (Strictモード)",
-		"gemini-2.0-flash (クリエイティブモード)",
+	
+	// モデル名の設定
+	var modeNames []string
+	if c.isPro {
+		modeNames = []string{
+			"gemini-2.0-pro (通常モード)",
+			"gemini-2.0-pro (Strictモード)",
+			"gemini-2.0-pro (クリエイティブモード)",
+		}
+	} else {
+		modeNames = []string{
+			"gemini-2.0-flash (通常モード)",
+			"gemini-2.0-flash (Strictモード)",
+			"gemini-2.0-flash (クリエイティブモード)",
+		}
 	}
 	
 	results := make([]types.ModelResult, len(modes))
@@ -57,7 +79,12 @@ func (c *Competitor) CompeteTask(task types.Task) types.CompetitionResult {
 			startTime := time.Now()
 			fmt.Printf("🤖 %s 実行中...\n", modeName)
 			
-			client := gemini.NewClientWithMode(c.apiKey, genMode)
+			var client *gemini.Client
+			if c.isPro {
+				client = gemini.NewProClientWithMode(c.apiKey, genMode)
+			} else {
+				client = gemini.NewClientWithMode(c.apiKey, genMode)
+			}
 			content, err := client.GenerateContent(task.Prompt)
 			
 			duration := time.Since(startTime)
