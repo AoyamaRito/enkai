@@ -25,6 +25,12 @@ func NewListCmd() *cobra.Command {
 	return cmd
 }
 
+// NewAnalyzeCmd はanalyzeサブコマンドを作成
+func NewAnalyzeCmd() *cobra.Command {
+	cmd := newAnalyzeCmd()
+	return cmd
+}
+
 func getAPIKey() string {
 	// グローバル変数から取得する方法を後で実装
 	return os.Getenv("GEMINI_API_KEY")

@@ -42,6 +42,7 @@ func init() {
 	rootCmd.AddCommand(cmd.NewFromTemplateCmd())
 	rootCmd.AddCommand(cmd.NewFromJSONCmd())
 	rootCmd.AddCommand(cmd.NewListCmd())
+	rootCmd.AddCommand(cmd.NewAnalyzeCmd())
 }
 
 func main() {
