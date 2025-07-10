@@ -19,7 +19,8 @@ type Competitor struct {
 // NewCompetitor は新しいCompetitorを作成
 func NewCompetitor(apiKey string, models []string) *Competitor {
 	if len(models) == 0 {
-		models = gemini.AvailableModels // デフォルトは全モデル
+		// Gemini 2.0 Flashのみ使用するため、コンペティション不要
+		models = gemini.AvailableModels
 	}
 	return &Competitor{
 		apiKey: apiKey,
@@ -29,39 +30,51 @@ func NewCompetitor(apiKey string, models []string) *Competitor {
 
 // CompeteTask は複数モデルでタスクを実行し最良の結果を選択
 func (c *Competitor) CompeteTask(task types.Task) types.CompetitionResult {
-	results := make([]types.ModelResult, len(c.models))
+	// Gemini 2.0 Flashを異なるモードで実行
+	modes := []gemini.GenerationMode{
+		gemini.ModeNormal,
+		gemini.ModeStrict,
+		gemini.ModeCreative,
+	}
+	modeNames := []string{
+		"gemini-2.0-flash (通常モード)",
+		"gemini-2.0-flash (Strictモード)",
+		"gemini-2.0-flash (クリエイティブモード)",
+	}
+	
+	results := make([]types.ModelResult, len(modes))
 	var wg sync.WaitGroup
 	
 	fmt.Printf("\n🏁 コンペティション開始: %s\n", task.FileName)
-	fmt.Printf("参加モデル: %s\n\n", strings.Join(c.models, ", "))
+	fmt.Printf("実行モード: %s\n\n", strings.Join(modeNames, ", "))
 
-	// 各モデルで並列実行
-	for i, model := range c.models {
+	// 各モードで並列実行
+	for i, mode := range modes {
 		wg.Add(1)
-		go func(index int, modelName string) {
+		go func(index int, genMode gemini.GenerationMode, modeName string) {
 			defer wg.Done()
 			
 			startTime := time.Now()
-			fmt.Printf("🤖 %s 実行中...\n", modelName)
+			fmt.Printf("🤖 %s 実行中...\n", modeName)
 			
-			client := gemini.NewClient(c.apiKey, modelName)
+			client := gemini.NewClientWithMode(c.apiKey, genMode)
 			content, err := client.GenerateContent(task.Prompt)
 			
 			duration := time.Since(startTime)
 			
 			results[index] = types.ModelResult{
-				Model:    modelName,
+				Model:    modeName,
 				Content:  content,
 				Error:    err,
 				Duration: duration,
 			}
 			
 			if err != nil {
-				fmt.Printf("❌ %s 失敗: %v\n", modelName, err)
+				fmt.Printf("❌ %s 失敗: %v\n", modeName, err)
 			} else {
-				fmt.Printf("✅ %s 完了 (%.2fs)\n", modelName, duration.Seconds())
+				fmt.Printf("✅ %s 完了 (%.2fs)\n", modeName, duration.Seconds())
 			}
-		}(i, model)
+		}(i, mode, modeNames[i])
 	}
 	
 	wg.Wait()
@@ -102,9 +115,19 @@ func (c *Competitor) evaluateResults(results []types.ModelResult) (*types.ModelR
 		}
 	}
 	
+	// モードごとの選択理由を詳細化
+	modeReason := ""
+	if strings.Contains(best.Model, "Strict") {
+		modeReason = "厳密で一貫性のあるコード生成"
+	} else if strings.Contains(best.Model, "クリエイティブ") {
+		modeReason = "革新的なアプローチとコード構造"
+	} else {
+		modeReason = "バランスの取れた実装"
+	}
+	
 	reason := fmt.Sprintf(
-		"モデル: %s | スコア: %.2f | 実行時間: %.2fs | 理由: コード品質とレスポンス速度の最適バランス",
-		best.Model, best.Score, best.Duration.Seconds(),
+		"モード: %s | スコア: %.2f | 実行時間: %.2fs | 理由: %s",
+		best.Model, best.Score, best.Duration.Seconds(), modeReason,
 	)
 	
 	return best, reason

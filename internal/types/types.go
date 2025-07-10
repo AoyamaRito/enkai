@@ -35,7 +35,8 @@ type ModelResult struct {
 
 // GeminiRequest はGemini APIへのリクエスト
 type GeminiRequest struct {
-	Contents []Content `json:"contents"`
+	Contents             []Content             `json:"contents"`
+	GenerationConfig     *GenerationConfig     `json:"generationConfig,omitempty"`
 }
 
 // Content はメッセージコンテンツ
@@ -63,4 +64,12 @@ type Candidate struct {
 type APIError struct {
 	Message string `json:"message"`
 	Code    int    `json:"code"`
+}
+
+// GenerationConfig は生成設定
+type GenerationConfig struct {
+	Temperature      float64 `json:"temperature,omitempty"`
+	TopP             float64 `json:"topP,omitempty"`
+	TopK             int     `json:"topK,omitempty"`
+	MaxOutputTokens  int     `json:"maxOutputTokens,omitempty"`
 }

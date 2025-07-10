@@ -15,28 +15,51 @@ const (
 	timeout = 120 * time.Second
 )
 
-// 利用可能なGeminiモデル
+// 利用可能なGeminiモデル（同じモデルを異なる設定で実行）
 var AvailableModels = []string{
-	"gemini-1.5-flash-latest",
-	"gemini-1.5-pro-latest",
-	"gemini-1.0-pro",
+	"gemini-2.0-flash",        // 通常モード
+	"gemini-2.0-flash",        // Strictモード
+	"gemini-2.0-flash",        // クリエイティブモード
 }
+
+// モード設定
+type GenerationMode int
+
+const (
+	ModeNormal GenerationMode = iota
+	ModeStrict
+	ModeCreative
+)
 
 // Client はGemini APIクライアント
 type Client struct {
 	apiKey     string
 	model      string
+	mode       GenerationMode
 	httpClient *http.Client
 }
 
 // NewClient は新しいGeminiクライアントを作成
 func NewClient(apiKey string, model string) *Client {
 	if model == "" {
-		model = AvailableModels[0] // デフォルトモデル
+		model = "gemini-2.0-flash"
 	}
 	return &Client{
 		apiKey: apiKey,
 		model:  model,
+		mode:   ModeNormal,
+		httpClient: &http.Client{
+			Timeout: timeout,
+		},
+	}
+}
+
+// NewClientWithMode はモード指定でクライアントを作成
+func NewClientWithMode(apiKey string, mode GenerationMode) *Client {
+	return &Client{
+		apiKey: apiKey,
+		model:  "gemini-2.0-flash",
+		mode:   mode,
 		httpClient: &http.Client{
 			Timeout: timeout,
 		},
@@ -59,6 +82,29 @@ func (c *Client) GenerateContent(prompt string) (string, error) {
 
 	fullPrompt := systemPrompt + "\n\n" + prompt
 
+	// モードに応じた生成設定
+	var genConfig *types.GenerationConfig
+	switch c.mode {
+	case ModeStrict:
+		genConfig = &types.GenerationConfig{
+			Temperature: 0.2,
+			TopP:        0.8,
+			TopK:        40,
+		}
+	case ModeCreative:
+		genConfig = &types.GenerationConfig{
+			Temperature: 0.9,
+			TopP:        0.95,
+			TopK:        100,
+		}
+	default: // ModeNormal
+		genConfig = &types.GenerationConfig{
+			Temperature: 0.5,
+			TopP:        0.9,
+			TopK:        60,
+		}
+	}
+
 	// リクエストボディを作成
 	reqBody := types.GeminiRequest{
 		Contents: []types.Content{
@@ -68,6 +114,7 @@ func (c *Client) GenerateContent(prompt string) (string, error) {
 				},
 			},
 		},
+		GenerationConfig: genConfig,
 	}
 
 	jsonData, err := json.Marshal(reqBody)
