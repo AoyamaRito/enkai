@@ -62,7 +62,7 @@ const AI_FIRST_BASE_PROMPT = `
 // Gemini並列実行関数
 async function executeParallel(tasks: Task[], concurrency: number = 5) {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
   
   // 並列実行数を制限
   const limit = pLimit(concurrency);

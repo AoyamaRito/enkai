@@ -192,6 +192,63 @@ const tasks = [
 
 これらは参考実装として提供されており、実際の使用では独自のテンプレートを作成することを推奨します。
 
+## Claude Code内での使用方法
+
+### 直接実行（プログラマティック）
+
+```typescript
+import { executeGeminiTasks } from './gemini-execute';
+
+// タスク定義
+const tasks = [
+  {
+    fileName: 'Header.tsx',
+    outputPath: './components/Header.tsx',
+    prompt: 'Create a responsive header component'
+  },
+  {
+    fileName: 'Footer.tsx',
+    outputPath: './components/Footer.tsx',
+    prompt: 'Create a footer component'
+  }
+];
+
+// 実行
+const results = await executeGeminiTasks(tasks);
+```
+
+### AI-First開発用ヘルパー
+
+```typescript
+import { executeAIFirstComponents } from './gemini-execute';
+
+const components = [
+  {
+    name: 'GameChat.tsx',
+    spec: 'NPCチャットシステム with リアルタイム更新'
+  },
+  {
+    name: 'PlayerProfile.tsx',
+    spec: 'プレイヤープロフィール with ステータス管理'
+  }
+];
+
+await executeAIFirstComponents(components, './components');
+```
+
+### クイック実行
+
+```typescript
+import { quickExecute } from './gemini-execute';
+
+await quickExecute([
+  { name: 'utils.ts', description: 'Date formatting utilities' },
+  { name: 'types.ts', description: 'TypeScript interfaces' }
+]);
+```
+
+詳細な使用例は `claude-code-example.ts` を参照してください。
+
 ## 開発
 
 ```bash

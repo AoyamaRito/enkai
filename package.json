@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsx gemini-parallel.ts",
-    "start": "node gemini-parallel.js"
+    "start": "node gemini-parallel.js",
+    "akm": "tsx api-key-manager.ts"
   },
   "keywords": [
     "gemini",

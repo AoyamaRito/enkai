@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "Button.tsx",
+    "outputPath": "./src/components/ui/Button.tsx",
+    "prompt": "再利用可能なボタンコンポーネント:\n- primary/secondary/danger のバリアント\n- サイズ: sm/md/lg\n- disabled状態\n- ローディング状態\n- アイコン対応\n- Tailwind CSS\n- TypeScript"
+  },
+  {
+    "fileName": "Modal.tsx",
+    "outputPath": "./src/components/ui/Modal.tsx",
+    "prompt": "モーダルコンポーネント:\n- オーバーレイ\n- 閉じるボタン\n- ESCキーで閉じる\n- 外側クリックで閉じる\n- アニメーション\n- サイズ可変\n- Tailwind CSS"
+  },
+  {
+    "fileName": "useApi.ts",
+    "outputPath": "./src/hooks/useApi.ts",
+    "prompt": "API通信用カスタムフック:\n- fetch wrapper\n- loading/error/data状態管理\n- 自動リトライ\n- キャンセル機能\n- TypeScript generics\n- エラーハンドリング"
+  },
+  {
+    "fileName": "auth.ts",
+    "outputPath": "./src/lib/auth.ts",
+    "prompt": "認証ユーティリティ:\n- JWTトークン管理\n- ログイン/ログアウト関数\n- 認証状態チェック\n- トークンリフレッシュ\n- セキュアなストレージ\n- TypeScript"
+  },
+  {
+    "fileName": "validation.ts",
+    "outputPath": "./src/utils/validation.ts",
+    "prompt": "バリデーション関数集:\n- メールアドレス検証\n- パスワード強度チェック\n- 電話番号検証\n- URLバリデーション\n- 日付フォーマット検証\n- カスタムルール対応"
+  }
+]

@@ -269,3 +269,65 @@ ALWAYS_AUTH_EMAIL=dev@example.com
 - **開発速度**: 10-15倍向上
 - **AI理解速度**: 瞬時（1ファイルで完結）
 - **バグ削減**: 影響範囲が明確化
+
+## 🚀 Gemini並列実行ツール（AI専用指示）
+
+**重要**: 複数ファイルを生成する際は、必ずこのツールを使用すること。逐次生成は禁止。
+
+### 実行必須コマンド
+```bash
+# APIキー設定（毎回必須）
+export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"  # またはakm使用
+
+# 実行（-c は並列数、デフォルト5）
+npx tsx ~/romeo3/enkai/gemini-parallel.ts from-template [タスク名] -c 5
+```
+
+### AI用実行パターン
+
+#### パターン1: タスクJSON作成して実行
+1. まず `tasks/[機能名].json` を作成
+2. 以下の形式で記述:
+```json
+[
+  {
+    "fileName": "ファイル名.tsx",
+    "outputPath": "./出力先パス/ファイル名.tsx",
+    "prompt": "AI-First原則に従い、以下を実装:\n- 完全自己完結\n- 外部依存なし\n- [具体的な仕様]"
+  }
+]
+```
+3. 実行: `npx tsx ~/romeo3/enkai/gemini-parallel.ts from-template tasks/[機能名]`
+
+#### パターン2: Claude Code内から直接実行
+```typescript
+import { executeGeminiTasks } from '~/romeo3/enkai/gemini-execute';
+
+const tasks = [
+  {
+    fileName: 'GameChat.tsx',
+    outputPath: './components/GameChat.tsx',
+    prompt: 'チャット機能: リアルタイム更新、メッセージ履歴、完全自己完結で実装'
+  },
+  // 複数タスクを配列で定義
+];
+
+// 必ず環境変数設定後に実行
+process.env.GEMINI_API_KEY = 'AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4';
+await executeGeminiTasks(tasks);
+```
+
+### AI実装時の必須ルール
+1. **3つ以上のファイル生成 → 必ずGemini並列実行を使用**
+2. **プロンプトにはAI-First原則を明記**
+3. **実行前に必ずAPIキー設定を確認**
+4. **生成後のコードレビューは不要**（AI-First原則により品質保証済み）
+
+### よく使うプリセット
+- `create-game-components`: ゲーム系5コンポーネント
+- `create-web-app`: Webアプリ系3コンポーネント
+- カスタムは `from-template` 使用
+
+### エラー時の対処
+- APIキーエラー → `npm run akm shell my-gemini | grep export` 実行
+- テンプレートエラー → `mkdir -p templates` 後に再実行
