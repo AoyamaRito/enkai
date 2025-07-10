@@ -1,0 +1,17 @@
+[
+  {
+    "fileName": "Dashboard.tsx",
+    "outputPath": "./components/Dashboard.tsx",
+    "prompt": "管理ダッシュボードを実装。以下の要件：\n- 統計情報表示（カード形式）\n- グラフ表示（簡易実装）\n- リアルタイムデータ更新\n- フィルター機能\n- ダークモード対応\n- 完全自己完結（外部依存なし）"
+  },
+  {
+    "fileName": "UserSettings.tsx",
+    "outputPath": "./components/UserSettings.tsx",
+    "prompt": "ユーザー設定画面を実装。以下の要件：\n- プロファイル編集\n- 通知設定\n- プライバシー設定\n- テーマ切り替え\n- 設定の保存・復元\n- 完全自己完結（外部依存なし）"
+  },
+  {
+    "fileName": "NotificationCenter.tsx",
+    "outputPath": "./components/NotificationCenter.tsx",
+    "prompt": "通知センターを実装。以下の要件：\n- 通知一覧表示\n- 既読・未読管理\n- 通知タイプ別フィルター\n- リアルタイム通知受信\n- 通知削除機能\n- 完全自己完結（外部依存なし）"
+  }
+]

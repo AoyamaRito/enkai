@@ -29,5 +29,28 @@ test-*.txt
 *.temp
 
 # Next.js
+.next-env.d.ts
+
+# Go binaries
+enkai
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go test binary
+*.test
+
+# Go coverage
+*.out
+
+# Go vendor
+vendor/
+
+# Go workspace
+go.work
+
+# Generated components (from Gemini)
 components/
-app/
+output/

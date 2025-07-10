@@ -1,0 +1,17 @@
+[
+  {
+    "fileName": "GameChat.tsx",
+    "outputPath": "./components/GameChat.tsx",
+    "prompt": "リアルタイムチャット機能を実装。以下の要件：\n- メッセージ送受信機能\n- リアルタイム更新（ポーリング）\n- メッセージ履歴表示\n- 入力バリデーション\n- モバイル対応UI\n- 完全自己完結（外部依存なし）"
+  },
+  {
+    "fileName": "PlayerProfile.tsx",
+    "outputPath": "./components/PlayerProfile.tsx",
+    "prompt": "プレイヤープロファイル画面を実装。以下の要件：\n- プロファイル情報表示（名前、レベル、ステータス）\n- アバター画像表示\n- ステータス編集機能\n- 実績表示\n- レスポンシブデザイン\n- 完全自己完結（外部依存なし）"
+  },
+  {
+    "fileName": "BattleSystem.tsx",
+    "outputPath": "./components/BattleSystem.tsx",
+    "prompt": "ターン制バトルシステムを実装。以下の要件：\n- HP/MPゲージ表示\n- 攻撃・防御・スキル選択\n- ダメージ計算ロジック\n- バトルログ表示\n- アニメーション効果\n- 完全自己完結（外部依存なし）"
+  }
+]
