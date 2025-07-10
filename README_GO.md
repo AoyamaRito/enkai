@@ -42,11 +42,11 @@ export GEMINI_API_KEY="your-api-key"
 
 #### コンペティションモード（デフォルト）
 ```bash
-# 3つのモデルで競争実行、最良の結果を採用
+# Gemini 2.0-Flashを3つのモードで競争実行
 enkai from-template game-components
 
-# 特定のモデルのみ使用
-enkai from-template web-app --models gemini-1.5-flash-latest,gemini-1.5-pro-latest
+# Gemini 2.0-Proを3つのモードで競争実行（高品質）
+enkai from-template game-components --pro
 
 # 並列数を増やして高速化
 enkai from-template game-components -c 10
