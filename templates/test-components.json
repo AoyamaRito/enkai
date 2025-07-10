@@ -1,0 +1,17 @@
+[
+  {
+    "fileName": "TestButton.tsx",
+    "outputPath": "./test-output/TestButton.tsx",
+    "prompt": "AI-First原則に従って、シンプルなボタンコンポーネントを実装:\n- 完全自己完結\n- クリック時にカウントアップ\n- モバイルファースト\n- Tailwind CSSでスタイリング\n- TypeScript使用"
+  },
+  {
+    "fileName": "TestCard.tsx",
+    "outputPath": "./test-output/TestCard.tsx",
+    "prompt": "AI-First原則に従って、カードコンポーネントを実装:\n- 完全自己完結\n- タイトル、説明、画像を表示\n- ホバーエフェクト\n- モバイルレスポンシブ\n- Tailwind CSS使用"
+  },
+  {
+    "fileName": "TestList.tsx",
+    "outputPath": "./test-output/TestList.tsx",
+    "prompt": "AI-First原則に従って、リストコンポーネントを実装:\n- 完全自己完結\n- アイテムの追加・削除機能\n- フィルター機能\n- ローカルステート管理\n- Tailwind CSSでスタイリング"
+  }
+]
