@@ -22,6 +22,7 @@ type Config struct {
 	IncludePattern string
 	ExcludePattern string
 	UsePro         bool
+	OutputFile     string
 }
 
 // FileInfo はスキャンされたファイルの情報

@@ -13,6 +13,7 @@ var (
 	fix            bool
 	includePattern string
 	excludePattern string
+	outputFile     string
 )
 
 func newAnalyzeCmd() *cobra.Command {
@@ -26,6 +27,7 @@ func newAnalyzeCmd() *cobra.Command {
   enkai analyze --mode architect             # アーキテクチャ分析
   enkai analyze --mode refactor              # リファクタリング候補提案
   enkai analyze "セキュリティホール" src/    # カスタムクエリで分析
+  enkai analyze -o report.md                 # 結果をファイルに保存
   enkai analyze --fix                        # 問題を見つけて即修正`,
 		RunE: runAnalyze,
 	}
@@ -36,6 +38,7 @@ func newAnalyzeCmd() *cobra.Command {
 	cmd.Flags().BoolVar(&fix, "fix", false, "見つかった問題を自動修正")
 	cmd.Flags().StringVar(&includePattern, "include", "", "含めるファイルパターン (例: **/*.ts)")
 	cmd.Flags().StringVar(&excludePattern, "exclude", "", "除外するファイルパターン")
+	cmd.Flags().StringVarP(&outputFile, "output", "o", "", "結果を保存するファイル (例: report.md)")
 
 	return cmd
 }
@@ -93,6 +96,7 @@ func runAnalyze(cmd *cobra.Command, args []string) error {
 		IncludePattern: includePattern,
 		ExcludePattern: excludePattern,
 		UsePro:        isProMode(cmd),
+		OutputFile:    outputFile,
 	}
 
 	analyzer := analyzer.New(config)
