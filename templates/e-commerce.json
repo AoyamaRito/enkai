@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "ProductCard.tsx",
+    "outputPath": "./components/shop/ProductCard.tsx",
+    "prompt": "商品カードコンポーネント\n- 商品画像（ホバーで2枚目表示）\n- 商品名、価格、割引表示\n- お気に入りボタン\n- カートに追加ボタン\n- 在庫状況表示\n- レビュー星評価\n- クイックビューモーダル\n- レスポンシブデザイン"
+  },
+  {
+    "fileName": "ShoppingCart.tsx",
+    "outputPath": "./components/shop/ShoppingCart.tsx",
+    "prompt": "ショッピングカートコンポーネント\n- カート内商品リスト\n- 数量変更機能\n- 商品削除\n- 小計・合計金額計算\n- クーポンコード入力\n- 送料計算\n- 保存して後で購入\n- スライドイン表示"
+  },
+  {
+    "fileName": "CheckoutForm.tsx",
+    "outputPath": "./components/shop/CheckoutForm.tsx",
+    "prompt": "チェックアウトフォーム\n- 配送先情報入力\n- 支払い方法選択\n- クレジットカード入力（ダミー）\n- 注文確認画面\n- バリデーション\n- プログレスバー\n- 注文完了画面\n- メール通知（ダミー）"
+  },
+  {
+    "fileName": "ProductFilter.tsx",
+    "outputPath": "./components/shop/ProductFilter.tsx",
+    "prompt": "商品フィルターサイドバー\n- カテゴリー選択\n- 価格帯スライダー\n- ブランド選択\n- サイズ・カラー選択\n- 評価フィルター\n- 並び替え機能\n- フィルターリセット\n- モバイル用ドロワー"
+  },
+  {
+    "fileName": "api/products/route.ts",
+    "outputPath": "./app/api/products/route.ts",
+    "prompt": "商品API エンドポイント\n- GET: 商品一覧取得（ページネーション）\n- フィルター処理\n- 検索機能\n- ソート機能\n- 商品詳細取得\n- 在庫確認\n- TypeScript型定義\n- エラーハンドリング"
+  }
+]

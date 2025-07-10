@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "Analytics.tsx",
+    "outputPath": "./components/dashboard/Analytics.tsx",
+    "prompt": "分析ダッシュボードコンポーネント\n- リアルタイムビジター数\n- 日/週/月の切り替えタブ\n- 折れ線グラフ（SVG実装）\n- 前期比較表示\n- トップページランキング\n- デバイス別アクセス円グラフ\n- エクスポート機能\n- 自動更新（30秒ごと）"
+  },
+  {
+    "fileName": "UserTable.tsx",
+    "outputPath": "./components/dashboard/UserTable.tsx",
+    "prompt": "ユーザー管理テーブルコンポーネント\n- ユーザー一覧表示\n- 検索・フィルター機能\n- ステータス別表示（アクティブ/非アクティブ）\n- 一括選択・操作\n- インライン編集\n- ユーザー詳細モーダル\n- CSVインポート/エクスポート\n- ページネーション"
+  },
+  {
+    "fileName": "NotificationCenter.tsx",
+    "outputPath": "./components/dashboard/NotificationCenter.tsx", 
+    "prompt": "通知センターコンポーネント\n- 未読通知バッジ\n- 通知リスト（時系列）\n- 通知タイプ別アイコン\n- 既読/未読切り替え\n- 一括既読機能\n- 通知設定リンク\n- リアルタイム更新\n- スライドインアニメーション"
+  },
+  {
+    "fileName": "QuickActions.tsx",
+    "outputPath": "./components/dashboard/QuickActions.tsx",
+    "prompt": "クイックアクションパネル\n- よく使う機能のショートカット\n- アイコン付きボタングリッド\n- ドラッグ&ドロップで並び替え\n- カスタマイズ可能\n- 最近使った項目\n- キーボードショートカット表示\n- ツールチップ\n- レスポンシブグリッド"
+  },
+  {
+    "fileName": "SystemStatus.tsx",
+    "outputPath": "./components/dashboard/SystemStatus.tsx",
+    "prompt": "システムステータスモニター\n- サーバー稼働状況\n- CPU/メモリ使用率ゲージ\n- エラーログ表示\n- アラート通知\n- 自動リフレッシュ\n- 履歴グラフ\n- ステータスインジケーター\n- エクスポート機能"
+  }
+]

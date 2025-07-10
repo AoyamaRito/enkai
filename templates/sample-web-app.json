@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "LandingPage.tsx",
+    "outputPath": "./app/page.tsx",
+    "prompt": "ランディングページコンポーネント（Next.js App Router）\n- ヒーローセクション（キャッチコピー、CTA）\n- 特徴紹介（3カラムグリッド）\n- 料金プラン表\n- お客様の声セクション\n- FAQ（アコーディオン）\n- フッターCTA\n- スムーズスクロール\n- モバイルレスポンシブ"
+  },
+  {
+    "fileName": "PricingCard.tsx",
+    "outputPath": "./components/PricingCard.tsx",
+    "prompt": "料金プランカードコンポーネント\n- プラン名と価格表示\n- 機能リスト（チェックマーク付き）\n- 人気プランバッジ\n- 選択ボタン（ホバーエフェクト）\n- 年間/月間切り替え対応\n- アニメーション効果\n- ダークモード対応"
+  },
+  {
+    "fileName": "ContactForm.tsx",
+    "outputPath": "./components/ContactForm.tsx",
+    "prompt": "お問い合わせフォームコンポーネント\n- 名前、メール、件名、本文の入力欄\n- バリデーション（必須項目、メール形式）\n- 送信中のローディング表示\n- 成功/エラーメッセージ\n- reCAPTCHA対応（ダミー実装）\n- フォームリセット機能\n- アクセシビリティ対応"
+  },
+  {
+    "fileName": "api/contact/route.ts",
+    "outputPath": "./app/api/contact/route.ts",
+    "prompt": "お問い合わせAPIエンドポイント（Next.js App Router）\n- POSTリクエスト処理\n- 入力値バリデーション\n- メール送信処理（Resend API使用）\n- レート制限実装\n- エラーハンドリング\n- 成功/失敗レスポンス\n- TypeScript型定義"
+  },
+  {
+    "fileName": "Newsletter.tsx", 
+    "outputPath": "./components/Newsletter.tsx",
+    "prompt": "ニュースレター登録コンポーネント\n- メールアドレス入力欄\n- 購読ボタン\n- プライバシーポリシー同意チェックボックス\n- 登録成功メッセージ\n- 重複登録チェック\n- アニメーション効果\n- モバイル最適化"
+  }
+]
