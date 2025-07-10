@@ -1,332 +1,105 @@
-# Gemini Parallel - 汎用AI並列実行ツール
+# 🔥 Enkai - Gemini並列実行ツール
 
-Gemini 2.0 Flash APIを使用して、複数のAIタスクを並列実行するCLIツールです。コード生成、データ処理、テキスト変換など、あらゆるAIタスクを高速並列処理できます。
+AI-First開発を加速する、Gemini APIを使った並列タスク実行システム。
+
+## 概要
+
+Enkaiは、複数のAIタスクを並列実行することで、開発速度を10-15倍に向上させるツールです。各タスクは独立したGemini APIインスタンスで処理され、完全自己完結型のコードを生成します。
 
 ## 特徴
 
-- 🚀 **並列実行**: 複数のAIタスクを同時実行で高速化
-- 🎯 **汎用設計**: コード生成、翻訳、分析など何でも可能
-- 📊 **詳細レポート**: 実行結果の詳細なJSON形式レポート
-- 🎨 **美しいCLI**: カラフルな進捗表示とスピナー
-- ⚡ **高速処理**: Gemini 2.0 Flash使用で高速レスポンス
-- 🔧 **カスタマイズ可能**: JSONテンプレートで自由にタスク定義
+- **並列実行**: 最大5つのタスクを同時実行（調整可能）
+- **AI-First原則**: 1ファイル読むだけで全て理解可能なコード生成
+- **完全自己完結**: 外部依存を最小限に抑えた実装
+- **簡単な使用方法**: CLIまたはWebインターフェースから利用可能
 
-## インストール
+## クイックスタート
 
-```bash
-npm install
-```
-
-## 環境変数設定
+### 1. 環境設定
 
 ```bash
-# 方法1: 直接設定
-export GEMINI_API_KEY="your-gemini-api-key"
+# APIキーの設定
+export GEMINI_API_KEY="your-api-key"
 
-# 方法2: API Key Managerを使用（推奨）
-npx tsx api-key-manager.ts add my-gemini
-npx tsx api-key-manager.ts get my-gemini --shell >> ~/.bashrc
-source ~/.bashrc
+# またはapi-key-managerを使用
+npm run akm shell my-gemini | grep export
 ```
 
-## 基本的な使い方
-
-### 1. テンプレートファイルの作成
-
-`tasks.json`を作成:
-
-```json
-[
-  {
-    "fileName": "output1.txt",
-    "outputPath": "./results/output1.txt",
-    "prompt": "Write a detailed analysis of climate change impacts"
-  },
-  {
-    "fileName": "script.py",
-    "outputPath": "./scripts/script.py",
-    "prompt": "Create a Python script for data visualization using matplotlib"
-  },
-  {
-    "fileName": "README.md",
-    "outputPath": "./docs/README.md",
-    "prompt": "Generate comprehensive documentation for a REST API"
-  }
-]
-```
-
-### 2. 実行
+### 2. CLIから実行
 
 ```bash
-# テンプレートから実行
-npx tsx gemini-parallel.ts from-template tasks
+# JSONファイルから実行
+npx tsx gemini-parallel.ts from-template tasks/my-task.json
 
-# 並列実行数を指定（デフォルト: 5）
-npx tsx gemini-parallel.ts from-template tasks -c 10
+# プリセットテンプレートを使用
+npx tsx gemini-parallel.ts create-game-components
+
+# 並列数を指定（デフォルト: 5）
+npx tsx gemini-parallel.ts from-template tasks/my-task.json -c 10
 ```
 
-## 実用例
+### 3. Webインターフェースから実行
 
-### コード生成（複数言語）
+```bash
+npm run dev
+# http://localhost:3000 にアクセス
+```
+
+## タスクJSON形式
+
 ```json
 [
   {
-    "fileName": "server.js",
-    "outputPath": "./backend/server.js",
-    "prompt": "Create an Express.js server with JWT authentication"
-  },
-  {
-    "fileName": "app.py",
-    "outputPath": "./backend/app.py",
-    "prompt": "Create a FastAPI server with JWT authentication"
-  },
-  {
-    "fileName": "main.go",
-    "outputPath": "./backend/main.go",
-    "prompt": "Create a Gin server with JWT authentication"
+    "fileName": "Component.tsx",
+    "outputPath": "./components/Component.tsx",
+    "prompt": "AI-First原則に従い、完全自己完結のコンポーネントを実装"
   }
 ]
 ```
 
-### ドキュメント生成
-```json
-[
-  {
-    "fileName": "API.md",
-    "outputPath": "./docs/API.md",
-    "prompt": "Generate API documentation for an e-commerce platform"
-  },
-  {
-    "fileName": "SETUP.md",
-    "outputPath": "./docs/SETUP.md",
-    "prompt": "Create a setup guide for developers"
-  },
-  {
-    "fileName": "ARCHITECTURE.md",
-    "outputPath": "./docs/ARCHITECTURE.md",
-    "prompt": "Write a system architecture document"
-  }
-]
+## AI-First開発原則
+
+1. **完全自己完結**: 1ファイル = 1つの完全な機能
+2. **外部依存最小限**: React/Next.js標準のみ使用
+3. **重複コード歓迎**: 各ファイルが独立して理解可能
+4. **即座修正可能**: 「このファイルの〇〇を変更」で完結
+
+## ディレクトリ構造
+
 ```
-
-### データ分析スクリプト
-```json
-[
-  {
-    "fileName": "analyze_sales.py",
-    "outputPath": "./analysis/analyze_sales.py",
-    "prompt": "Python script to analyze sales data with pandas and create visualizations"
-  },
-  {
-    "fileName": "customer_segmentation.py",
-    "outputPath": "./analysis/customer_segmentation.py",
-    "prompt": "Python script for customer segmentation using K-means clustering"
-  },
-  {
-    "fileName": "forecast_revenue.py",
-    "outputPath": "./analysis/forecast_revenue.py",
-    "prompt": "Python script for revenue forecasting using time series analysis"
-  }
-]
+enkai/
+├── gemini-parallel.ts      # 並列実行エンジン
+├── api-key-manager.ts      # APIキー管理ツール
+├── app/                    # Next.js Webインターフェース
+├── templates/              # タスクテンプレート
+├── tasks/                  # タスクJSON格納場所
+└── CLAUDE.md              # AI-First開発原則詳細
 ```
-
-### 翻訳タスク
-```json
-[
-  {
-    "fileName": "README_ja.md",
-    "outputPath": "./translations/README_ja.md",
-    "prompt": "Translate the following to Japanese: [Your English content here]"
-  },
-  {
-    "fileName": "README_es.md",
-    "outputPath": "./translations/README_es.md",
-    "prompt": "Translate the following to Spanish: [Your English content here]"
-  }
-]
-```
-
-## 高度な使い方
-
-### プロンプトテンプレートの活用
-
-共通のベースプロンプトを使用する場合:
-
-```javascript
-const basePrompt = `
-言語: TypeScript
-フレームワーク: React
-スタイル: Tailwind CSS
-要件: モバイルファースト、アクセシビリティ対応
-
-タスク: `;
-
-const tasks = [
-  {
-    fileName: "Header.tsx",
-    outputPath: "./components/Header.tsx",
-    prompt: basePrompt + "ヘッダーコンポーネントを作成"
-  },
-  // ...
-];
-```
-
-### 実行結果
-
-実行後、以下が生成されます:
-- 指定されたすべての出力ファイル
-- `gemini-report-[timestamp].json` - 詳細な実行レポート
-
-レポート例:
-```json
-{
-  "timestamp": "2024-01-09T10:30:00.000Z",
-  "totalDuration": 5234,
-  "totalTasks": 10,
-  "successCount": 10,
-  "failCount": 0,
-  "averageDuration": 523,
-  "tasks": [...]
-}
-```
-
-## プリセットコマンド（サンプル）
-
-ツールには2つのサンプルコマンドが含まれています:
-- `create-game-components`: ゲーム開発用コンポーネントの例
-- `create-web-app`: Webアプリ用コンポーネントの例
-
-これらは参考実装として提供されており、実際の使用では独自のテンプレートを作成することを推奨します。
-
-## Claude Code内での使用方法
-
-### 直接実行（プログラマティック）
-
-```typescript
-import { executeGeminiTasks } from './gemini-execute';
-
-// タスク定義
-const tasks = [
-  {
-    fileName: 'Header.tsx',
-    outputPath: './components/Header.tsx',
-    prompt: 'Create a responsive header component'
-  },
-  {
-    fileName: 'Footer.tsx',
-    outputPath: './components/Footer.tsx',
-    prompt: 'Create a footer component'
-  }
-];
-
-// 実行
-const results = await executeGeminiTasks(tasks);
-```
-
-### AI-First開発用ヘルパー
-
-```typescript
-import { executeAIFirstComponents } from './gemini-execute';
-
-const components = [
-  {
-    name: 'GameChat.tsx',
-    spec: 'NPCチャットシステム with リアルタイム更新'
-  },
-  {
-    name: 'PlayerProfile.tsx',
-    spec: 'プレイヤープロフィール with ステータス管理'
-  }
-];
-
-await executeAIFirstComponents(components, './components');
-```
-
-### クイック実行
-
-```typescript
-import { quickExecute } from './gemini-execute';
-
-await quickExecute([
-  { name: 'utils.ts', description: 'Date formatting utilities' },
-  { name: 'types.ts', description: 'TypeScript interfaces' }
-]);
-```
-
-詳細な使用例は `claude-code-example.ts` を参照してください。
 
 ## 開発
 
 ```bash
-# TypeScriptで直接実行
-npm run dev from-template my-tasks
+# インストール
+npm install
+
+# 開発サーバー起動
+npm run dev
 
 # ビルド
 npm run build
 
-# ビルド後の実行
-npm start from-template my-tasks
+# 型チェック
+npm run typecheck
+
+# リント
+npm run lint
 ```
 
-## 🆕 編集モード機能（v2.0）
+## 注意事項
 
-既存ファイルの並列編集が可能になりました！
-
-### 編集モードの使い方
-
-```bash
-# UIを並列で改善
-npx tsx gemini-parallel-edit.ts enhance-ui
-
-# 作成と編集を混合実行
-npx tsx gemini-parallel-edit.ts mixed-tasks
-```
-
-### 編集タスクの定義
-
-```json
-[
-  {
-    "fileName": "Header.tsx",
-    "outputPath": "./components/Header.tsx",
-    "mode": "edit",
-    "prompt": "ダークモード対応を追加してください"
-  },
-  {
-    "fileName": "NewComponent.tsx",
-    "outputPath": "./components/NewComponent.tsx",
-    "mode": "create",
-    "prompt": "新しいコンポーネントを作成"
-  }
-]
-```
-
-### 編集モードの特徴
-
-- 📝 **既存ファイルの改善**: UIの改善、機能追加、リファクタリング
-- 🔄 **混合実行**: 新規作成と編集を同時に並列実行
-- 🎯 **コンテキスト保持**: 既存コードを理解した上で編集
-- ⚡ **高速化**: 複数ファイルの一括UI改善などが数秒で完了
-
-### 編集モードの実用例
-
-#### UI一括改善
-```bash
-# todo-app-v2のすべてのコンポーネントにモダンUIを適用
-npx tsx gemini-parallel-edit.ts from-template ui-enhancement-tasks
-```
-
-#### リファクタリング
-```json
-[
-  {
-    "fileName": "OldComponent.tsx",
-    "outputPath": "./components/OldComponent.tsx",
-    "mode": "edit",
-    "prompt": "TypeScriptの型定義を改善し、any型を排除"
-  }
-]
-```
+- APIキーは環境変数で管理してください
+- 並列実行数を増やしすぎるとレート制限に引っかかる可能性があります
+- 生成されたコードは必ずレビューしてください
 
 ## ライセンス
 
