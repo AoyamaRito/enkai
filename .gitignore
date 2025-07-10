@@ -13,6 +13,21 @@ dist/
 *.iml
 coverage/
 .nyc_output/
+
+# Generated files
 gemini-report-*.json
+triple-report-*.json
+
+# Build outputs
+.next/
+out/
+build/
+
+# Test and temporary files
+test-*.txt
+*.tmp
+*.temp
+
+# Next.js
 components/
 app/

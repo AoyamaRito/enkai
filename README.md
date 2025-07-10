@@ -20,7 +20,13 @@ npm install
 ## 環境変数設定
 
 ```bash
+# 方法1: 直接設定
 export GEMINI_API_KEY="your-gemini-api-key"
+
+# 方法2: API Key Managerを使用（推奨）
+npx tsx api-key-manager.ts add my-gemini
+npx tsx api-key-manager.ts get my-gemini --shell >> ~/.bashrc
+source ~/.bashrc
 ```
 
 ## 基本的な使い方
@@ -260,6 +266,66 @@ npm run build
 
 # ビルド後の実行
 npm start from-template my-tasks
+```
+
+## 🆕 編集モード機能（v2.0）
+
+既存ファイルの並列編集が可能になりました！
+
+### 編集モードの使い方
+
+```bash
+# UIを並列で改善
+npx tsx gemini-parallel-edit.ts enhance-ui
+
+# 作成と編集を混合実行
+npx tsx gemini-parallel-edit.ts mixed-tasks
+```
+
+### 編集タスクの定義
+
+```json
+[
+  {
+    "fileName": "Header.tsx",
+    "outputPath": "./components/Header.tsx",
+    "mode": "edit",
+    "prompt": "ダークモード対応を追加してください"
+  },
+  {
+    "fileName": "NewComponent.tsx",
+    "outputPath": "./components/NewComponent.tsx",
+    "mode": "create",
+    "prompt": "新しいコンポーネントを作成"
+  }
+]
+```
+
+### 編集モードの特徴
+
+- 📝 **既存ファイルの改善**: UIの改善、機能追加、リファクタリング
+- 🔄 **混合実行**: 新規作成と編集を同時に並列実行
+- 🎯 **コンテキスト保持**: 既存コードを理解した上で編集
+- ⚡ **高速化**: 複数ファイルの一括UI改善などが数秒で完了
+
+### 編集モードの実用例
+
+#### UI一括改善
+```bash
+# todo-app-v2のすべてのコンポーネントにモダンUIを適用
+npx tsx gemini-parallel-edit.ts from-template ui-enhancement-tasks
+```
+
+#### リファクタリング
+```json
+[
+  {
+    "fileName": "OldComponent.tsx",
+    "outputPath": "./components/OldComponent.tsx",
+    "mode": "edit",
+    "prompt": "TypeScriptの型定義を改善し、any型を排除"
+  }
+]
 ```
 
 ## ライセンス

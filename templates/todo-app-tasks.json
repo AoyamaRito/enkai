@@ -1,27 +1,27 @@
 [
   {
     "fileName": "page.tsx",
-    "outputPath": "./todo-app/app/page.tsx",
+    "outputPath": "./todo-app-v2/page.tsx",
     "prompt": "Next.js App RouterでToDoアプリのメインページを作成:\n- ToDoリストの表示\n- 新規ToDo追加フォーム\n- ToDo項目の完了/未完了切り替え\n- ToDo項目の削除機能\n- ローカルストレージでデータ永続化\n- Tailwind CSSでモダンなデザイン\n- レスポンシブ対応\n- 完全自己完結（外部コンポーネント不要）"
   },
   {
     "fileName": "TodoItem.tsx",
-    "outputPath": "./todo-app/components/TodoItem.tsx",
+    "outputPath": "./todo-app-v2/TodoItem.tsx",
     "prompt": "ToDo項目を表示するコンポーネント:\n- 完全自己完結（外部コンポーネント禁止）\n- チェックボックスで完了状態表示\n- 削除ボタン\n- 完了時は打ち消し線\n- ホバー時のアニメーション\n- Tailwind CSSでスタイリング\n- TypeScript型定義完備\n- propsで受け取る機能も全てファイル内で定義"
   },
   {
     "fileName": "TodoForm.tsx",
-    "outputPath": "./todo-app/components/TodoForm.tsx",
+    "outputPath": "./todo-app-v2/TodoForm.tsx",
     "prompt": "新規ToDo追加フォームコンポーネント:\n- テキスト入力フィールド\n- 追加ボタン\n- Enter キーで送信\n- 空の入力を防ぐバリデーション\n- 追加後は入力をクリア\n- Tailwind CSSでスタイリング"
   },
   {
     "fileName": "TodoStats.tsx",
-    "outputPath": "./todo-app/components/TodoStats.tsx",
+    "outputPath": "./todo-app-v2/TodoStats.tsx",
     "prompt": "ToDo統計情報を表示するコンポーネント:\n- 総タスク数\n- 完了タスク数\n- 未完了タスク数\n- 進捗率（パーセンテージ）\n- プログレスバー表示\n- Tailwind CSSでカード型デザイン"
   },
   {
     "fileName": "TodoFilter.tsx",
-    "outputPath": "./todo-app/components/TodoFilter.tsx",
+    "outputPath": "./todo-app-v2/TodoFilter.tsx",
     "prompt": "ToDoフィルターコンポーネント:\n- 全て表示\n- 完了のみ表示\n- 未完了のみ表示\n- アクティブなフィルターをハイライト\n- Tailwind CSSでタブ風デザイン"
   }
 ]

@@ -1,0 +1,32 @@
+[
+  {
+    "fileName": "page.tsx",
+    "outputPath": "./todo-app-v2/app/page.tsx",
+    "mode": "edit",
+    "prompt": "以下のUI改善を実装:\n- 背景に動的グラデーション追加\n- フローティングアニメーション要素\n- ネオモーフィズムとグラスモーフィズムの組み合わせ\n- マイクロインタラクション（ホバー、クリック時）\n- スムーズなトランジション\n- 3Dトランスフォーム効果"
+  },
+  {
+    "fileName": "TodoForm.tsx",
+    "outputPath": "./todo-app-v2/TodoForm.tsx",
+    "mode": "edit",
+    "prompt": "入力フォームを最新のUIトレンドで改善:\n- フローティングラベル\n- 波紋エフェクト（リップル）\n- アイコンアニメーション\n- グラデーションボーダー\n- 音声入力ボタン追加\n- AIサジェスト機能のUI"
+  },
+  {
+    "fileName": "TodoItem.tsx",
+    "outputPath": "./todo-app-v2/TodoItem.tsx",
+    "mode": "edit",
+    "prompt": "ToDoアイテムを魅力的に:\n- 完了時の祝福アニメーション（紙吹雪など）\n- スワイプジェスチャー対応\n- 長押しでコンテキストメニュー\n- 優先度による色分けとアイコン\n- タグ機能のUI\n- 編集モードのインライン切り替え"
+  },
+  {
+    "fileName": "TodoStats.tsx",
+    "outputPath": "./todo-app-v2/TodoStats.tsx",
+    "mode": "edit",
+    "prompt": "統計表示をダッシュボード風に:\n- リアルタイムグラフ（SVGアニメーション）\n- 円グラフ（完了率）\n- 週間/月間トレンド表示\n- 達成バッジシステム\n- パーティクルエフェクト\n- データビジュアライゼーション強化"
+  },
+  {
+    "fileName": "TodoFilter.tsx",
+    "outputPath": "./todo-app-v2/TodoFilter.tsx",
+    "mode": "edit",
+    "prompt": "フィルターUIを革新的に:\n- セグメントコントロール風デザイン\n- スライドアニメーション\n- アクティブ状態の視覚的フィードバック\n- ドロップダウンフィルター追加\n- カスタムフィルター作成UI\n- フィルタープリセット機能"
+  }
+]

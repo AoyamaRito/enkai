@@ -37,7 +37,7 @@ export default function SorisutoWebsite() {
   return (
     <div className="min-h-screen">
       {/* Header with navigation */}
-      <Header navItems={navItems} scrollToSection={scrollToSection} />
+      <Header />
 
       {/* Main sections */}
       <div ref={heroRef}>

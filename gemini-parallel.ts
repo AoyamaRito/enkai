@@ -24,42 +24,42 @@ interface TaskResult {
   error?: any;
 }
 
-// AI-Firstプロンプトベース
+// AI-First base prompt
 const AI_FIRST_BASE_PROMPT = `
-# AI-First開発原則に従った実装
+# AI-First Development Principles
 
-以下の方針で実装してください：
+Follow these implementation guidelines:
 
-1. **完全自己完結原則**
-   - 1ファイル = 1つの完全な機能
-   - 外部インポートは絶対最小限（React/Next.js標準のみ）
-   - カスタムhooks禁止 → ファイル内関数として実装
-   - 外部atoms禁止 → ファイル内useState/useReducer
-   - utils関数禁止 → 必要な関数は各ファイルにコピー
+1. **Complete Self-Containment**
+   - 1 file = 1 complete feature
+   - Minimal external imports (React/Next.js standard only)
+   - No custom hooks - implement as in-file functions
+   - No external atoms - use in-file useState/useReducer
+   - No utils functions - copy needed functions to each file
 
-2. **技術スタック**
+2. **Tech Stack**
    - React/Next.js App Router
    - TypeScript
-   - useState/useReducer（状態管理）
-   - インラインスタイル + Tailwind CSS
-   - fetch直書き（API通信）
+   - useState/useReducer for state management
+   - Inline styles + Tailwind CSS
+   - Direct fetch for API calls
 
-3. **実装ルール**
-   - 日本語コメントなし（コードで自己説明）
-   - モバイルファースト
-   - エラーハンドリング完備
-   - ローディング状態実装
+3. **Implementation Rules**
+   - No comments (self-documenting code)
+   - Mobile-first approach
+   - Complete error handling
+   - Loading states implementation
 
-4. **禁止事項**
-   - Jotai/Recoil等の外部状態管理
-   - カスタムhooks
-   - 共有utils/lib
+4. **Forbidden**
+   - Jotai/Recoil or external state management
+   - Custom hooks
+   - Shared utils/lib
    - CSS Modules
 
-実装するコンポーネント：
+Component to implement:
 `;
 
-// Gemini並列実行関数
+// Gemini parallel execution function
 async function executeParallel(tasks: Task[], concurrency: number = 5) {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
   const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
@@ -68,11 +68,11 @@ async function executeParallel(tasks: Task[], concurrency: number = 5) {
   const limit = pLimit(concurrency);
   
   const startTime = Date.now();
-  console.log(chalk.blue(`🚀 ${tasks.length}個のタスクを並列実行中（並列数: ${concurrency}）...\n`));
+  console.log(chalk.blue(`🚀 Executing ${tasks.length} tasks in parallel (concurrency: ${concurrency})...\n`));
 
   const promises = tasks.map((task) => 
     limit(async () => {
-      const taskSpinner = ora(`${task.fileName} 生成中...`).start();
+      const taskSpinner = ora(`${task.fileName} generating...`).start();
       const taskStartTime = Date.now();
       
       try {
@@ -89,11 +89,11 @@ async function executeParallel(tasks: Task[], concurrency: number = 5) {
         const dir = path.dirname(task.outputPath);
         await fs.mkdir(dir, { recursive: true });
         
-        // ファイル書き込み
+        // Write file
         await fs.writeFile(task.outputPath, code.trim());
         
         const duration = Date.now() - taskStartTime;
-        taskSpinner.succeed(chalk.green(`✓ ${task.fileName} 完了 (${duration}ms)`));
+        taskSpinner.succeed(chalk.green(`✓ ${task.fileName} completed (${duration}ms)`));
         
         return { 
           success: true, 
@@ -103,8 +103,8 @@ async function executeParallel(tasks: Task[], concurrency: number = 5) {
         };
       } catch (error) {
         const duration = Date.now() - taskStartTime;
-        taskSpinner.fail(chalk.red(`✗ ${task.fileName} 失敗`));
-        console.error(chalk.gray(`  エラー: ${error instanceof Error ? error.message : 'Unknown error'}`));
+        taskSpinner.fail(chalk.red(`✗ ${task.fileName} failed`));
+        console.error(chalk.gray(`  Error: ${error instanceof Error ? error.message : 'Unknown error'}`));
         
         return { 
           success: false, 
@@ -124,13 +124,13 @@ async function executeParallel(tasks: Task[], concurrency: number = 5) {
   const successCount = results.filter(r => r.success).length;
   const failCount = results.filter(r => !r.success).length;
   
-  console.log(chalk.blue(`\n📊 実行結果:`));
-  console.log(chalk.green(`  成功: ${successCount}ファイル`));
+  console.log(chalk.blue(`\n📊 Execution Results:`));
+  console.log(chalk.green(`  Success: ${successCount} files`));
   if (failCount > 0) {
-    console.log(chalk.red(`  失敗: ${failCount}ファイル`));
+    console.log(chalk.red(`  Failed: ${failCount} files`));
   }
-  console.log(chalk.gray(`  総実行時間: ${totalDuration}ms`));
-  console.log(chalk.gray(`  平均実行時間: ${Math.round(totalDuration / tasks.length)}ms/ファイル`));
+  console.log(chalk.gray(`  Total time: ${totalDuration}ms`));
+  console.log(chalk.gray(`  Average: ${Math.round(totalDuration / tasks.length)}ms/file`));
   
   // レポート生成
   await generateReport(results, totalDuration);
@@ -138,7 +138,7 @@ async function executeParallel(tasks: Task[], concurrency: number = 5) {
   return results;
 }
 
-// レポート生成関数
+// Report generation function
 async function generateReport(results: TaskResult[], totalDuration: number) {
   const report = {
     timestamp: new Date().toISOString(),
@@ -158,7 +158,7 @@ async function generateReport(results: TaskResult[], totalDuration: number) {
   
   const reportPath = `./gemini-report-${Date.now()}.json`;
   await fs.writeFile(reportPath, JSON.stringify(report, null, 2));
-  console.log(chalk.gray(`\n📄 詳細レポート: ${reportPath}`));
+  console.log(chalk.gray(`\n📄 Detailed report: ${reportPath}`));
 }
 
 // タスクテンプレート読み込み
@@ -178,14 +178,14 @@ const program = new Command();
 
 program
   .name('gemini-parallel')
-  .description('Gemini APIを使用した並列コード生成ツール')
+  .description('Parallel code generation tool using Gemini API')
   .version('1.0.0');
 
 // ゲームコンポーネント生成コマンド
 program
   .command('create-game-components')
-  .description('ゲームコンポーネントを並列生成')
-  .option('-c, --concurrency <number>', '並列実行数', '5')
+  .description('Generate game components in parallel')
+  .option('-c, --concurrency <number>', 'Concurrency level', '5')
   .action(async (options) => {
     const concurrency = parseInt(options.concurrency);
     
@@ -196,14 +196,14 @@ program
         prompt: `${AI_FIRST_BASE_PROMPT}
 
 GameChat.tsx
-- NPCとのリアルタイムチャット機能
-- メッセージ履歴（ユーザー/NPC区別）
-- 自動スクロール
-- 入力フォーム（Enter送信対応）
-- ローディング中は入力無効化
-- メッセージごとにアバター表示
-- タイムスタンプ表示
-- モバイル対応レイアウト`
+- Real-time chat with NPCs
+- Message history (user/NPC distinction)
+- Auto-scroll
+- Input form (Enter to send)
+- Disable input while loading
+- Avatar display for each message
+- Timestamp display
+- Mobile responsive layout`
       },
       {
         fileName: 'PlayerProfile.tsx',
@@ -211,14 +211,14 @@ GameChat.tsx
         prompt: `${AI_FIRST_BASE_PROMPT}
 
 PlayerProfile.tsx
-- プレイヤー基本情報（名前、レベル、経験値）
-- ステータス表示（HP/MP/攻撃力/防御力）
-- 装備アイテム一覧
-- スキルリスト
-- プロフィール画像アップロード
-- ステータスポイント振り分け機能
-- レベルアップ時のアニメーション
-- モバイル対応カード型UI`
+- Player basic info (name, level, experience)
+- Status display (HP/MP/Attack/Defense)
+- Equipment item list
+- Skill list
+- Profile image upload
+- Status point allocation
+- Level up animation
+- Mobile responsive card UI`
       },
       {
         fileName: 'ItemInventory.tsx',
@@ -273,8 +273,8 @@ QuestBoard.tsx
 // Webアプリコンポーネント生成コマンド
 program
   .command('create-web-app')
-  .description('Webアプリケーションコンポーネントを並列生成')
-  .option('-c, --concurrency <number>', '並列実行数', '5')
+  .description('Generate web app components in parallel')
+  .option('-c, --concurrency <number>', 'Concurrency level', '5')
   .action(async (options) => {
     const concurrency = parseInt(options.concurrency);
     
@@ -286,7 +286,7 @@ program
 
 Dashboard.tsx（Next.js App Router ページコンポーネント）
 - 統計サマリーカード（売上/ユーザー数/アクティブ率）
-- リアルタイムグラフ（Chart.js不要、SVGで実装）
+- Real-time graphs (no Chart.js, implement with SVG)
 - 最近のアクティビティフィード
 - クイックアクションボタン
 - 通知パネル
@@ -329,8 +329,8 @@ DataTable.tsx
 // テンプレートからタスク実行
 program
   .command('from-template <templateName>')
-  .description('テンプレートファイルからタスクを実行')
-  .option('-c, --concurrency <number>', '並列実行数', '5')
+  .description('Execute tasks from template file')
+  .option('-c, --concurrency <number>', 'Concurrency level', '5')
   .action(async (templateName, options) => {
     const concurrency = parseInt(options.concurrency);
     
@@ -338,7 +338,7 @@ program
       const tasks = await loadTaskTemplate(templateName);
       await executeParallel(tasks, concurrency);
     } catch (error) {
-      console.error(chalk.red('テンプレート実行エラー'));
+      console.error(chalk.red('Template execution error'));
       process.exit(1);
     }
   });
@@ -347,16 +347,16 @@ program
 program
   .command('custom')
   .description('カスタムタスクを対話的に作成して実行')
-  .option('-c, --concurrency <number>', '並列実行数', '5')
+  .option('-c, --concurrency <number>', 'Concurrency level', '5')
   .action(async (options) => {
-    // 簡易実装（本来は対話的入力を実装）
+    // Simple implementation (interactive input to be implemented)
     console.log(chalk.yellow('カスタムタスク機能は開発中です...'));
   });
 
 // 環境変数チェック
 if (!process.env.GEMINI_API_KEY) {
   console.error(chalk.red('エラー: GEMINI_API_KEY環境変数が設定されていません'));
-  console.log(chalk.gray('export GEMINI_API_KEY="your-api-key" を実行してください'));
+  console.log(chalk.gray('Please run: export GEMINI_API_KEY="your-api-key"'));
   process.exit(1);
 }
 

@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "page.tsx",
+    "outputPath": "./todo-app-v3/app/page.tsx",
+    "prompt": "Create a premium Todo App main page with cutting-edge UI/UX:\n\nDESIGN REQUIREMENTS:\n- Apple-inspired refined UI (iOS 17 style)\n- Glassmorphism + Neumorphism fusion\n- Fluid animations (CSS/Tailwind only, no Framer Motion)\n- Full dark mode support (system settings sync)\n- 3D transform effects\n- Particle background animations\n- Micro-interactions on all elements\n\nFEATURES:\n- Todo list CRUD operations\n- Drag & drop reordering (HTML5 DnD API)\n- Real-time search\n- Category/tag management\n- Priority levels with color coding\n- Due date management with calendar\n- Progress visualization\n- Local storage persistence\n- PWA support with offline functionality\n\nPERFORMANCE:\n- Virtual scrolling (10k items)\n- Lazy loading\n- Optimized re-renders\n- Web Vitals optimization\n\nACCESSIBILITY:\n- WCAG AAA compliance\n- Full keyboard navigation\n- Screen reader optimized\n- High contrast mode\n\nFollow AI-First principles (single file) while achieving the best UI/UX."
+  },
+  {
+    "fileName": "TodoItemPremium.tsx",
+    "outputPath": "./todo-app-v3/components/TodoItemPremium.tsx",
+    "prompt": "Premium Todo Item Component:\n\nDESIGN:\n- Card design with layered shadows\n- 3D floating effect on hover\n- Swipe gesture support\n- Celebration animation on completion (confetti, stars)\n- Priority-based gradient backgrounds\n- Colorful tag display\n- Warning animation for approaching deadlines\n\nINTERACTIONS:\n- Inline editing (double-click)\n- Long press context menu\n- Swipe to delete/archive\n- Pinch for details\n- Drag handle display\n\nSTATUS DISPLAY:\n- Progress bar for ongoing tasks\n- Subtask support\n- Attachment icons\n- Comment count badges\n- Last updated timestamp\n\nImplement as completely self-contained component."
+  },
+  {
+    "fileName": "TodoInputPremium.tsx", 
+    "outputPath": "./todo-app-v3/components/TodoInputPremium.tsx",
+    "prompt": "Premium Input Form Component:\n\nDESIGN:\n- Floating input field\n- AI suggestion UI (simulated)\n- Voice input button (Web Speech API)\n- Emoji picker\n- Rich text editor style\n\nFEATURES:\n- Natural language parsing\n- Template functionality\n- Recent tags suggestion\n- Keyboard shortcuts\n- Multi-line support\n\nANIMATIONS:\n- Ripple effect on focus\n- Micro-animations on typing\n- Submit button fill animation\n- Success checkmark animation\n\nCompletely self-contained, no external libraries."
+  },
+  {
+    "fileName": "TodoStatsDashboard.tsx",
+    "outputPath": "./todo-app-v3/components/TodoStatsDashboard.tsx", 
+    "prompt": "Statistics Dashboard Component:\n\nVISUALIZATIONS:\n- Pie chart (SVG animations)\n- Line graph (completion rate trends)\n- Heatmap (activity calendar)\n- 3D-style bar charts\n\nSTATISTICS:\n- Completion rate (animated counter)\n- Productivity score\n- Streak (consecutive days)\n- Category analysis\n- Time-based performance\n\nINTERACTIVE ELEMENTS:\n- Hover for details\n- Click to drill down\n- Period filter (today/week/month/year)\n- Data export feature\n\nDESIGN:\n- Dashboard layout\n- Gradient cards\n- Animated numbers\n- Achievement badges\n\nImplement with SVG and CSS only, no external chart libraries."
+  },
+  {
+    "fileName": "TodoFilterBar.tsx",
+    "outputPath": "./todo-app-v3/components/TodoFilterBar.tsx",
+    "prompt": "Advanced Filter Bar Component:\n\nUI/UX:\n- Segment control (iOS style)\n- Animated tab switching\n- Advanced filters (popover)\n- Integrated search bar\n- Sort functionality\n\nFILTER FEATURES:\n- Status (all/active/completed/archived)\n- Priority filter\n- Due date filter (today/this week/overdue)\n- Tag filter (multi-select)\n- Custom filter creation\n\nDESIGN:\n- Sticky header\n- Blur background\n- Active state animations\n- Filter count badges\n\nSAVE FEATURES:\n- Filter presets\n- Recently used filters\n- URL parameter sync\n\nCompletely self-contained with advanced functionality."
+  }
+]

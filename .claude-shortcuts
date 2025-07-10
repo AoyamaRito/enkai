@@ -1,0 +1,33 @@
+#!/bin/bash
+# Claude ショートカット集
+
+# 基本エイリアス
+alias cgen="claude -p --dangerously-skip-permissions --print"
+alias cgen-todo="claude -p 'Create a modern Todo app with dark mode, animations, and local storage. Save as TodoApp.tsx' --dangerously-skip-permissions"
+
+# 関数
+ccomp() {
+  # Usage: ccomp Button.tsx "primary and secondary variants"
+  claude -p "Create React component $1 with: $2. Use AI-First principles." --dangerously-skip-permissions
+}
+
+cimprove() {
+  # Usage: cimprove TodoApp.tsx
+  claude -p "Improve the UI/UX of $1 with modern flat design" --dangerously-skip-permissions
+}
+
+# 並列生成（シンプル版）
+cparallel() {
+  # Usage: cparallel "Todo app" Todo.tsx List.tsx Form.tsx
+  local desc=$1
+  shift
+  for file in "$@"; do
+    echo "🚀 Generating $file..."
+    claude -p "Create $file for $desc project. AI-First principles." --dangerously-skip-permissions &
+  done
+  wait
+  echo "✅ All done!"
+}
+
+echo "Claude shortcuts loaded! 🚀"
+echo "Commands: cgen, ccomp, cimprove, cparallel"
