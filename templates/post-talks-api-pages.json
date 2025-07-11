@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "route.ts",
+    "outputPath": "./app/api/auth/[...nextauth]/route.ts",
+    "prompt": "Create NextAuth.js API route for Post-Talks app. Requirements:\n- Google OAuth provider\n- Session callbacks to include user ID\n- JWT strategy\n- TypeScript, Next.js 14 App Router\n- Complete self-contained file"
+  },
+  {
+    "fileName": "route.ts",
+    "outputPath": "./app/api/stripe/webhook/route.ts",
+    "prompt": "Create Stripe webhook handler for Post-Talks app. Requirements:\n- Handle payment_intent.succeeded event\n- Update user's tea/drink balance in Turso database\n- Verify webhook signature\n- TypeScript, Next.js 14 App Router\n- Complete self-contained file"
+  },
+  {
+    "fileName": "route.ts",
+    "outputPath": "./app/api/stripe/create-payment/route.ts",
+    "prompt": "Create Stripe payment intent API for Post-Talks app. Requirements:\n- Accept amount and type (tea/drink)\n- Create payment intent\n- Return client secret\n- TypeScript, Next.js 14 App Router\n- Complete self-contained file"
+  },
+  {
+    "fileName": "route.ts",
+    "outputPath": "./app/api/chat/route.ts",
+    "prompt": "Create chat API endpoint for Post-Talks app. Requirements:\n- Accept message and agent type (CAFE/BAR)\n- Deduct tea/drink from balance\n- Use OpenAI API for response\n- Return AI response\n- TypeScript, Next.js 14 App Router\n- Complete self-contained file"
+  },
+  {
+    "fileName": "route.ts",
+    "outputPath": "./app/api/news/fetch/route.ts",
+    "prompt": "Create news fetching API for Post-Talks app. Requirements:\n- Fetch latest news from RSS/API\n- Store in Turso database\n- Return formatted news\n- TypeScript, Next.js 14 App Router\n- Complete self-contained file"
+  }
+]

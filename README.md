@@ -1,51 +1,65 @@
-# 🔥 Enkai - Gemini並列実行ツール
+# 🔥 Enkai - AI-First開発ツール
 
-AI-First開発を加速する、Gemini APIを使った並列タスク実行システム。
+Gemini APIを使用してAI-First開発を加速するコマンドラインツール。
 
-## 概要
-
-Enkaiは、複数のAIタスクを並列実行することで、開発速度を10-15倍に向上させるツールです。各タスクは独立したGemini APIインスタンスで処理され、完全自己完結型のコードを生成します。
-
-## 特徴
-
-- **並列実行**: 最大5つのタスクを同時実行（調整可能）
-- **AI-First原則**: 1ファイル読むだけで全て理解可能なコード生成
-- **完全自己完結**: 外部依存を最小限に抑えた実装
-- **簡単な使用方法**: CLIまたはWebインターフェースから利用可能
-
-## クイックスタート
-
-### 1. 環境設定
+## 🚀 クイックインストール
 
 ```bash
-# APIキーの設定
-export GEMINI_API_KEY="your-api-key"
+# リポジトリをクローン
+git clone https://github.com/AoyamaRito/enkai.git
+cd enkai
 
-# またはapi-key-managerを使用
-npm run akm shell my-gemini | grep export
+# インストール（ビルド、配置、PATH設定を自動実行）
+./install-enkai.sh
+
+# PATH設定を有効化
+source ~/.zshrc  # または source ~/.bashrc
 ```
 
-### 2. CLIから実行
+### システム全体へのインストール（オプション）
 
 ```bash
-# JSONファイルから実行
-npx tsx gemini-parallel.ts from-template tasks/my-task.json
-
-# プリセットテンプレートを使用
-npx tsx gemini-parallel.ts create-game-components
-
-# 並列数を指定（デフォルト: 5）
-npx tsx gemini-parallel.ts from-template tasks/my-task.json -c 10
+# /usr/local/bin にインストール（管理者権限が必要）
+sudo ./install-enkai.sh --system
 ```
 
-### 3. Webインターフェースから実行
+## 📋 前提条件
+
+- Go 1.18以上
+- Node.js と npm（Gemini並列実行ツール用）
+- Gemini API キー（[Google AI Studio](https://makersuite.google.com/app/apikey)から取得）
+
+## 🔧 基本的な使い方
+
+### APIキーの設定
 
 ```bash
-npm run dev
-# http://localhost:3000 にアクセス
+# APIキーを設定（~/.enkai/config.jsonに保存）
+enkai api set YOUR_GEMINI_API_KEY
+
+# 設定状態を確認
+enkai api status
+
+# APIキーを削除
+enkai api delete
 ```
 
-## タスクJSON形式
+### Gemini並列実行ツール
+
+```bash
+# テンプレートから並列実行
+enkai gemini from-template dashboard-components -c 3
+
+# 出力先を指定
+enkai gemini from-template todo-app --output ./src/components
+
+# プリセットを使用
+enkai gemini create-game-components
+```
+
+## 📝 テンプレート形式
+
+`templates/`ディレクトリにJSONファイルを作成：
 
 ```json
 [
@@ -76,7 +90,57 @@ enkai/
 └── CLAUDE.md              # AI-First開発原則詳細
 ```
 
-## 開発
+## 🛠 手動ビルド
+
+インストールスクリプトを使わずに手動でビルドする場合：
+
+```bash
+# ビルド
+./build-enkai.sh
+
+# 手動でインストール
+cp enkai ~/bin/
+chmod +x ~/bin/enkai
+
+# PATHに追加
+echo 'export PATH="$HOME/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+## 📚 コマンドリファレンス
+
+```bash
+enkai --help              # ヘルプを表示
+enkai version             # バージョン情報
+enkai api set <KEY>       # APIキーを設定
+enkai api delete          # APIキーを削除
+enkai api status          # APIキーの状態確認
+enkai gemini <command>    # Gemini並列実行ツール
+```
+
+## 🔍 トラブルシューティング
+
+### enkaiコマンドが見つからない
+
+```bash
+# PATHを確認
+echo $PATH | grep -q "$HOME/bin" || echo "~/bin がPATHに含まれていません"
+
+# 手動でPATHに追加
+export PATH="$HOME/bin:$PATH"
+```
+
+### APIキーエラー
+
+```bash
+# APIキーが設定されているか確認
+enkai api status
+
+# 再設定
+enkai api set YOUR_GEMINI_API_KEY
+```
+
+## 開発環境
 
 ```bash
 # インストール
@@ -85,21 +149,12 @@ npm install
 # 開発サーバー起動
 npm run dev
 
-# ビルド
-npm run build
-
 # 型チェック
 npm run typecheck
 
 # リント
 npm run lint
 ```
-
-## 注意事項
-
-- APIキーは環境変数で管理してください
-- 並列実行数を増やしすぎるとレート制限に引っかかる可能性があります
-- 生成されたコードは必ずレビューしてください
 
 ## ライセンス
 

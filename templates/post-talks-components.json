@@ -1,0 +1,27 @@
+[
+  {
+    "fileName": "ChatInterface.tsx",
+    "outputPath": "./components/ChatInterface.tsx",
+    "prompt": "Create a LINE-style chat interface component for Post-Talks app. Requirements:\n- Mobile-first responsive design\n- Message bubbles (white for AI agent, light green for user)\n- Agent icon (☕ for CAFE, 🍸 for BAR)\n- Input field at bottom with send button\n- Show tea/drink balance in header\n- TypeScript, React, Tailwind CSS\n- Complete self-contained component\n- Use these color classes: chat-bg, chat-user, chat-ai, cafe-brown, bar-gold"
+  },
+  {
+    "fileName": "WalletDisplay.tsx",
+    "outputPath": "./components/WalletDisplay.tsx",
+    "prompt": "Create a wallet display component showing tea/drink balance. Requirements:\n- Compact header display\n- tea icon (🍵) and drink icon (🍸)\n- Click to open purchase modal\n- Show '100円 = 1tea' and '500円 = 1drink' on hover\n- Animate when balance changes\n- TypeScript, React, Tailwind CSS\n- Complete self-contained component"
+  },
+  {
+    "fileName": "AgentSelector.tsx",
+    "outputPath": "./components/AgentSelector.tsx",
+    "prompt": "Create an agent selector component for switching between CAFE/BAR agents. Requirements:\n- Tab-like interface\n- Show agent icon and name\n- Favorites (行きつけ) marked with star\n- Smooth transition animation\n- TypeScript, React, Tailwind CSS\n- Complete self-contained component"
+  },
+  {
+    "fileName": "NewsCard.tsx",
+    "outputPath": "./components/NewsCard.tsx",
+    "prompt": "Create a news article card component for chat messages. Requirements:\n- Compact card design\n- Title, summary, source\n- Scrap button (bookmark icon)\n- Tap to expand full article\n- Mobile-optimized\n- TypeScript, React, Tailwind CSS\n- Complete self-contained component"
+  },
+  {
+    "fileName": "PurchaseModal.tsx",
+    "outputPath": "./components/PurchaseModal.tsx",
+    "prompt": "Create a purchase modal for buying tea/drink. Requirements:\n- Clean modal design\n- Show pricing: 100円 = 1tea (100 conversations), 500円 = 1drink (100 premium conversations)\n- Payment options (buttons for different amounts)\n- 'This is a paid service' message prominently displayed\n- Close button\n- TypeScript, React, Tailwind CSS\n- Complete self-contained component"
+  }
+]

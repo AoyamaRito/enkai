@@ -1,0 +1,92 @@
+#!/bin/bash
+# enkaiツール用の環境設定ファイル
+# このファイルをホームディレクトリに配置し、シェルのRCファイルから読み込む
+
+# enkaiのインストールディレクトリ
+export ENKAI_HOME="$HOME/enkai"
+
+# PATHに追加（重複チェック付き）
+if [[ ":$PATH:" != *":$HOME/bin:"* ]]; then
+    export PATH="$HOME/bin:$PATH"
+fi
+
+# エイリアス設定
+alias ek='enkai'
+alias ekg='enkai gemini'
+alias eka='enkai api'
+
+# APIキーの環境変数（必要に応じて設定）
+# export GEMINI_API_KEY="YOUR_API_KEY_HERE"
+
+# 自動補完（bash/zsh対応）
+if command -v enkai &> /dev/null; then
+    # 簡易的な補完関数
+    _enkai_completion() {
+        local cur="${COMP_WORDS[COMP_CWORD]}"
+        local prev="${COMP_WORDS[COMP_CWORD-1]}"
+        
+        case $prev in
+            enkai|ek)
+                COMPREPLY=($(compgen -W "api gemini analyze --help --version" -- "$cur"))
+                ;;
+            api|eka)
+                COMPREPLY=($(compgen -W "set status delete" -- "$cur"))
+                ;;
+            gemini|ekg)
+                COMPREPLY=($(compgen -W "from-template create-game-components create-web-app" -- "$cur"))
+                ;;
+        esac
+    }
+    
+    # bashの場合
+    if [ -n "$BASH_VERSION" ]; then
+        complete -F _enkai_completion enkai ek
+    fi
+    
+    # zshの場合
+    if [ -n "$ZSH_VERSION" ]; then
+        compdef _enkai_completion enkai ek
+    fi
+fi
+
+# 便利な関数
+enkai_setup_project() {
+    # プロジェクトにenkaiをセットアップ
+    echo "🚀 プロジェクトにenkaiをセットアップしています..."
+    
+    # templatesディレクトリを作成
+    mkdir -p templates tasks
+    
+    # 基本的なテンプレートをコピー
+    if [ -d "$ENKAI_HOME/templates" ]; then
+        echo "📋 テンプレートをコピー中..."
+        cp "$ENKAI_HOME/templates/example.json" ./templates/ 2>/dev/null || true
+    fi
+    
+    # .envファイルにAPIキー設定を追加
+    if [ -f .env ] && ! grep -q "GEMINI_API_KEY" .env; then
+        echo "" >> .env
+        echo "# Gemini API Key for enkai" >> .env
+        echo "# GEMINI_API_KEY=your_api_key_here" >> .env
+    fi
+    
+    echo "✅ セットアップ完了！"
+}
+
+# APIキーの簡易設定関数
+enkai_quick_setup() {
+    if [ -z "$1" ]; then
+        echo "使い方: enkai_quick_setup YOUR_API_KEY"
+        return 1
+    fi
+    
+    # APIキーを設定
+    enkai api set "$1"
+    
+    # 環境変数にも設定
+    export GEMINI_API_KEY="$1"
+    
+    echo "✅ APIキーを設定しました"
+    echo "💡 永続化するには以下を.zshrcまたは.bashrcに追加してください:"
+    echo "   export GEMINI_API_KEY=\"$1\""
+}
