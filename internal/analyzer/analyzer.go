@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/AoyamaRito/enkai/internal/gemini"
@@ -75,7 +76,12 @@ func (a *Analyzer) Run() error {
 
 // analyze はファイルを分析
 func (a *Analyzer) analyze(files []FileInfo) (*AnalysisResult, error) {
-	// Geminiクライアント作成
+	// レビューモードの場合は並列実行
+	if a.config.Mode == AnalyzeModeReview && a.config.Concurrency > 1 {
+		return a.analyzeParallel(files)
+	}
+
+	// 通常の分析（既存の処理）
 	var client *gemini.Client
 	if a.config.UsePro {
 		client = gemini.NewProClientWithMode(a.config.APIKey, gemini.ModeNormal)
@@ -97,6 +103,116 @@ func (a *Analyzer) analyze(files []FileInfo) (*AnalysisResult, error) {
 	result := a.parseResponse(response)
 
 	return result, nil
+}
+
+// analyzeParallel は並列でファイルを分析
+func (a *Analyzer) analyzeParallel(files []FileInfo) (*AnalysisResult, error) {
+	concurrency := a.config.Concurrency
+	if concurrency <= 0 {
+		concurrency = 5
+	}
+
+	// ファイルをチャンクに分割
+	chunks := a.splitFilesIntoChunks(files, concurrency)
+	results := make(chan *AnalysisResult, len(chunks))
+	errors := make(chan error, len(chunks))
+	
+	var wg sync.WaitGroup
+	semaphore := make(chan struct{}, concurrency)
+
+	fmt.Printf("🚀 %d個のファイルを並列分析中 (並列数: %d)...\n", len(files), concurrency)
+
+	// 各チャンクを並列で分析
+	for i, chunk := range chunks {
+		wg.Add(1)
+		go func(idx int, fileChunk []FileInfo) {
+			defer wg.Done()
+			semaphore <- struct{}{}
+			defer func() { <-semaphore }()
+
+			// Geminiクライアント作成
+			var client *gemini.Client
+			if a.config.UsePro {
+				client = gemini.NewProClientWithMode(a.config.APIKey, gemini.ModeNormal)
+			} else {
+				client = gemini.NewClientWithMode(a.config.APIKey, gemini.ModeNormal)
+			}
+
+			// プロンプト生成
+			prompt := a.generatePrompt(fileChunk)
+
+			// Geminiで分析
+			response, err := client.GenerateContent(prompt)
+			if err != nil {
+				errors <- fmt.Errorf("チャンク%dの分析エラー: %w", idx, err)
+				return
+			}
+
+			// 結果をパース
+			result := a.parseResponse(response)
+			results <- result
+		}(i, chunk)
+	}
+
+	// 完了を待つ
+	wg.Wait()
+	close(results)
+	close(errors)
+
+	// エラーチェック
+	var errs []error
+	for err := range errors {
+		errs = append(errs, err)
+	}
+	if len(errs) > 0 {
+		return nil, fmt.Errorf("並列分析中にエラーが発生: %v", errs[0])
+	}
+
+	// 結果をマージ
+	finalResult := &AnalysisResult{
+		Reviews: []Review{},
+	}
+
+	for result := range results {
+		// レビュー結果を追加
+		for _, issue := range result.Issues {
+			review := Review{
+				File:     issue.File,
+				Content:  issue.Description,
+				Severity: issue.Severity,
+				Category: issue.Type,
+			}
+			finalResult.Reviews = append(finalResult.Reviews, review)
+		}
+
+		// サマリーをマージ
+		if finalResult.Summary != "" {
+			finalResult.Summary += "\n\n"
+		}
+		finalResult.Summary += result.Summary
+	}
+
+	return finalResult, nil
+}
+
+// splitFilesIntoChunks はファイルをチャンクに分割
+func (a *Analyzer) splitFilesIntoChunks(files []FileInfo, chunkCount int) [][]FileInfo {
+	if chunkCount <= 0 {
+		chunkCount = 1
+	}
+
+	chunks := make([][]FileInfo, 0, chunkCount)
+	chunkSize := (len(files) + chunkCount - 1) / chunkCount
+
+	for i := 0; i < len(files); i += chunkSize {
+		end := i + chunkSize
+		if end > len(files) {
+			end = len(files)
+		}
+		chunks = append(chunks, files[i:end])
+	}
+
+	return chunks
 }
 
 // generatePrompt は分析用のプロンプトを生成
@@ -144,6 +260,20 @@ func (a *Analyzer) generatePrompt(files []FileInfo) string {
 - 最適化の機会
 
 `)
+	case AnalyzeModeReview:
+		// 自然言語レビューモード
+		if a.config.ReviewPrompt != "" {
+			prompt.WriteString(fmt.Sprintf("以下の観点でコードレビューをしてください:\n%s\n\n", a.config.ReviewPrompt))
+		} else {
+			prompt.WriteString(`詳細なコードレビューを行ってください：
+- コード品質
+- 可読性と保守性
+- ベストプラクティスへの準拠
+- 潜在的なバグ
+- 改善可能な点
+
+`)
+		}
 	default:
 		// サマリーモード
 		prompt.WriteString(`プロジェクトの概要を分析してください：
@@ -282,6 +412,45 @@ func (a *Analyzer) formatResults(result *AnalysisResult) string {
 	output.WriteString("📊 分析結果\n")
 	output.WriteString(strings.Repeat("=", 80) + "\n")
 	
+	// レビューモードの場合
+	if a.config.Mode == AnalyzeModeReview && len(result.Reviews) > 0 {
+		output.WriteString(fmt.Sprintf("\n🔍 コードレビュー結果 (%d件):\n", len(result.Reviews)))
+		output.WriteString(strings.Repeat("-", 80) + "\n")
+		
+		// カテゴリ別にグループ化
+		reviewsByCategory := make(map[string][]Review)
+		for _, review := range result.Reviews {
+			category := review.Category
+			if category == "" {
+				category = "一般"
+			}
+			reviewsByCategory[category] = append(reviewsByCategory[category], review)
+		}
+		
+		// カテゴリごとに表示
+		for category, reviews := range reviewsByCategory {
+			output.WriteString(fmt.Sprintf("\n📌 %s:\n", category))
+			for _, review := range reviews {
+				severity := a.getSeverityIcon(review.Severity)
+				if review.File != "" {
+					output.WriteString(fmt.Sprintf("\n%s [%s] %s:\n", severity, review.Severity, review.File))
+				} else {
+					output.WriteString(fmt.Sprintf("\n%s [%s]:\n", severity, review.Severity))
+				}
+				output.WriteString(fmt.Sprintf("   %s\n", review.Content))
+			}
+		}
+		
+		// サマリーも表示
+		if result.Summary != "" {
+			output.WriteString("\n📝 総評:\n")
+			output.WriteString(result.Summary + "\n")
+		}
+		
+		return output.String()
+	}
+	
+	// 通常の分析結果（既存のフォーマット）
 	// サマリー表示
 	if result.Summary != "" {
 		output.WriteString("\n📝 サマリー:\n")

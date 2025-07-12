@@ -8,10 +8,10 @@
 enkai api status
 
 # APIキーが未設定の場合
-enkai api set "AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+enkai api set "YOUR_API_KEY_HERE"
 
 # または環境変数で設定
-export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+export GEMINI_API_KEY="YOUR_API_KEY_HERE"
 ```
 
 ### 2. Gemini並列実行の基本
@@ -43,7 +43,7 @@ enkai gemini create-game-components
 3. **実行コマンド**
    ```bash
    # APIキー設定（必須）
-   export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+   export GEMINI_API_KEY="YOUR_API_KEY_HERE"
    
    # テンプレート実行
    enkai gemini from-template tasks/[機能名] -c 5
@@ -91,10 +91,10 @@ export function ComponentName() {
 enkai api status
 
 # 再設定
-enkai api set "AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+enkai api set "YOUR_API_KEY_HERE"
 
 # 環境変数で直接設定
-export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+export GEMINI_API_KEY="YOUR_API_KEY_HERE"
 ```
 
 ### PATHが通っていない場合
@@ -137,7 +137,7 @@ mkdir -p templates tasks
 cp ~/enkai/templates/example.json ./templates/
 
 # 2. 複数コンポーネント生成（例：ダッシュボード）
-export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+export GEMINI_API_KEY="YOUR_API_KEY_HERE"
 enkai gemini from-template dashboard-components -c 5
 
 # 3. カスタムタスクの実行
@@ -169,7 +169,7 @@ ls ~/enkai/templates/
 
 3. **APIキーは環境変数で管理**
    ```bash
-   export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+   export GEMINI_API_KEY="YOUR_API_KEY_HERE"
    ```
 
 4. **出力先の確認**
@@ -202,14 +202,14 @@ cat > tasks/new-feature.json << 'EOF'
 EOF
 
 # 2. 実行
-export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+export GEMINI_API_KEY="YOUR_API_KEY_HERE"
 enkai gemini from-template tasks/new-feature -c 3
 ```
 
 ### シナリオ2: 既存プリセット使用
 ```bash
 # ゲーム系コンポーネント一括生成
-export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+export GEMINI_API_KEY="YOUR_API_KEY_HERE"
 enkai gemini create-game-components
 ```
 

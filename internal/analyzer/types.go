@@ -9,6 +9,7 @@ const (
 	AnalyzeModeRefactor
 	AnalyzeModeSecurity
 	AnalyzeModePerformance
+	AnalyzeModeReview  // 自然言語レビューモード
 )
 
 // Config は分析の設定
@@ -23,6 +24,8 @@ type Config struct {
 	ExcludePattern string
 	UsePro         bool
 	OutputFile     string
+	Concurrency    int    // 並列実行数
+	ReviewPrompt   string // レビュー用のカスタムプロンプト
 }
 
 // FileInfo はスキャンされたファイルの情報
@@ -39,6 +42,15 @@ type AnalysisResult struct {
 	Files        []FileAnalysis
 	Issues       []Issue
 	Suggestions  []Suggestion
+	Reviews      []Review  // レビュー結果
+}
+
+// Review は自然言語レビューの結果
+type Review struct {
+	File        string
+	Content     string  // レビュー内容
+	Severity    string  // 重要度
+	Category    string  // カテゴリ（セキュリティ、パフォーマンス等）
 }
 
 // FileAnalysis は個別ファイルの分析結果

@@ -27,13 +27,15 @@ func newAnalyzeCmd() *cobra.Command {
   enkai analyze --mode architect             # アーキテクチャ分析
   enkai analyze --mode refactor              # リファクタリング候補提案
   enkai analyze "セキュリティホール" src/    # カスタムクエリで分析
+  enkai analyze "型安全性を確認して"          # 自然言語でレビュー
+  enkai analyze "このコードの改善点を教えて" -c 10  # 並列実行数指定
   enkai analyze -o report.md                 # 結果をファイルに保存
   enkai analyze --fix                        # 問題を見つけて即修正`,
 		RunE: runAnalyze,
 	}
 
 	// フラグ設定
-	cmd.Flags().StringVar(&analyzeMode, "mode", "", "分析モード (architect/refactor/security/performance)")
+	cmd.Flags().StringVar(&analyzeMode, "mode", "", "分析モード (architect/refactor/security/performance/review)")
 	cmd.Flags().CountVarP(&verbosity, "verbose", "v", "詳細度 (-v: ファイル要約, -vv: 完全分析)")
 	cmd.Flags().BoolVar(&fix, "fix", false, "見つかった問題を自動修正")
 	cmd.Flags().StringVar(&includePattern, "include", "", "含めるファイルパターン (例: **/*.ts)")
@@ -80,9 +82,14 @@ func runAnalyze(cmd *cobra.Command, args []string) error {
 			mode = analyzer.AnalyzeModeSecurity
 		case "performance":
 			mode = analyzer.AnalyzeModePerformance
+		case "review":
+			mode = analyzer.AnalyzeModeReview
 		default:
 			return fmt.Errorf("無効な分析モード: %s", analyzeMode)
 		}
+	} else if query != "" {
+		// クエリが指定されている場合は自動的にレビューモードに
+		mode = analyzer.AnalyzeModeReview
 	}
 
 	// 分析の実行
@@ -97,6 +104,8 @@ func runAnalyze(cmd *cobra.Command, args []string) error {
 		ExcludePattern: excludePattern,
 		UsePro:        isProMode(cmd),
 		OutputFile:    outputFile,
+		Concurrency:   getConcurrency(cmd),
+		ReviewPrompt:  query,
 	}
 
 	analyzer := analyzer.New(config)

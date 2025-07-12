@@ -7,7 +7,7 @@ API_KEY="${1:-}"
 
 if [ -z "$API_KEY" ]; then
     echo "使用方法: ./build-apikey-holder.sh <GEMINI_API_KEY>"
-    echo "例: ./build-apikey-holder.sh AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+    echo "例: ./build-apikey-holder.sh YOUR_API_KEY_HERE"
     exit 1
 fi
 

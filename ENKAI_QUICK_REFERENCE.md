@@ -9,7 +9,7 @@ source ~/enkai/enkai-env-setup.sh
 
 ### 2️⃣ 毎回: APIキー設定
 ```bash
-export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+export GEMINI_API_KEY="YOUR_API_KEY_HERE"
 ```
 
 ### 3️⃣ 実行
@@ -38,7 +38,7 @@ EOF
 
 ### ステップ2: 環境設定
 ```bash
-export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+export GEMINI_API_KEY="YOUR_API_KEY_HERE"
 ```
 
 ### ステップ3: 実行
@@ -76,7 +76,7 @@ export PATH="$HOME/bin:$PATH"
 enkai api status
 
 # 設定
-enkai api set "AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
+enkai api set "YOUR_API_KEY_HERE"
 ```
 
 ## 💡 AI-First原則チェックリスト
@@ -127,5 +127,5 @@ enkai api set "AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"
 
 ```bash
 # 環境設定 + APIキー設定 + 実行
-source ~/enkai/enkai-env-setup.sh && export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4" && enkai gemini from-template dashboard-components
+source ~/enkai/enkai-env-setup.sh && export GEMINI_API_KEY="YOUR_API_KEY_HERE" && enkai gemini from-template dashboard-components
 ```

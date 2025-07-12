@@ -277,7 +277,7 @@ ALWAYS_AUTH_EMAIL=dev@example.com
 ### 実行必須コマンド
 ```bash
 # APIキー設定（毎回必須）
-export GEMINI_API_KEY="AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4"  # またはakm使用
+export GEMINI_API_KEY="YOUR_API_KEY_HERE"  # またはakm使用
 
 # 実行（-c は並列数、デフォルト5）
 npx tsx ~/romeo3/enkai/gemini-parallel.ts from-template [タスク名] -c 5
@@ -313,7 +313,7 @@ const tasks = [
 ];
 
 // 必ず環境変数設定後に実行
-process.env.GEMINI_API_KEY = 'AIzaSyC0jhQwBAE69IIfro7hVuXAfOyTW9Zb8n4';
+process.env.GEMINI_API_KEY = 'YOUR_API_KEY_HERE';
 await executeGeminiTasks(tasks);
 ```
 
